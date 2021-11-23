@@ -28,10 +28,12 @@ install() {
     sudo rpm --import https://yum.corretto.aws/corretto.key 
     sudo curl -L -o /etc/yum.repos.d/corretto.repo https://yum.corretto.aws/corretto.repo
     sudo yum install -y java-16-amazon-corretto-devel
+    sudo alternatives --set java /usr/lib/jvm/java-16-amazon-corretto/bin/java
   else
     # Amazon Corretto 8 (openJDK)
     sudo amazon-linux-extras enable corretto8
     sudo yum install -y java-1.8.0-amazon-corretto-devel
+    sudo alternatives --set java /usr/lib/jvm/java-1.8.0-amazon-corretto.x86_64/jre/bin/java 
   fi
 
   # Set config
