@@ -9,6 +9,7 @@ INSTALLATION_PATH="/home/$(whoami)/opt/spigot"
 USAGE=$(cat << DOC
 Usage: $0 [COMMAND|OPTION]
   [-i|install] <Minecraft Version>
+  [-u|update] <Minecraft Version>
   [-h|--help]
 DOC
 )
@@ -53,6 +54,18 @@ install() {
   echo 'Success'
 }
 
+update() {
+    local NEED_UPGRADE_MARKER_DIR
+
+    # Mark as need to --forceUpgrade
+    NEED_UPGRADE_MARKER_DIR="${INSTALLATION_PATH}/tmp"
+    mkdir -p "${NEED_UPGRADE_MARKER_DIR}"
+    touch "${NEED_UPGRADE_MARKER_DIR}/need-upgrade"
+    
+    # then install
+    install
+}
+
 usage() {
   echo "$USAGE"
 }
@@ -60,6 +73,9 @@ usage() {
 case $SUB_COMMAND in
   '-i'|'install')
     install
+    ;;
+  '-u'|'update')
+    update
     ;;
   '-h'|'--help'|*)
     usage
