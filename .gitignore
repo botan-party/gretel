@@ -1,1 +1,13 @@
+# Spigot
+/BuildData/
+/BuildTools.jar
+/BuildTools.log.txt
+/Bukkit/
+/CraftBukkit/
+/Spigot/
+/apache-maven-*/
+/work/
+
+# Upgrading
 /tmp/
+
