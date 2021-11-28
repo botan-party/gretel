@@ -61,8 +61,8 @@ scp -r ec2-user@<ipアドレス>:~/opt/spigot ./<サーバディレクトリ>
 ### アップデート方法
 
 ```sh
-bash ./setup.sh install <Minecraft Version>
+bash ./setup.sh update <Minecraft Version>
 ```
 
-インストール操作を再度実行することで、Spigotサーバーのアップデートをすることが可能です。
+注意 : アップデート直後はワールドデータの更新を行うため、起動時間が通常よりも長くなることがあります
 
