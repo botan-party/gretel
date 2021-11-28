@@ -3,6 +3,7 @@ set -e
 
 SUB_COMMAND=$1
 VERSION=$2
+CPU_ARCH="$(arch)"
 CURRENT_PATH="$(cd $(dirname $0) && pwd)"
 INSTALLATION_PATH="/home/$(whoami)/opt/spigot"
 
@@ -34,7 +35,7 @@ install() {
     # Amazon Corretto 8 (openJDK)
     sudo amazon-linux-extras enable corretto8
     sudo yum install -y java-1.8.0-amazon-corretto-devel
-    sudo alternatives --set java /usr/lib/jvm/java-1.8.0-amazon-corretto.x86_64/jre/bin/java 
+    sudo alternatives --set java /usr/lib/jvm/java-1.8.0-amazon-corretto.${CPU_ARCH}/jre/bin/java 
   fi
 
   # Set config
