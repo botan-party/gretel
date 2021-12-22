@@ -6,12 +6,12 @@ services:
       args:
         - VERSION=$MINECRAFT_VERSION
     environment:
-      EULA: "true"
+      EULA: $EULA # TRUE or FALSE
     volumes:
-      - $SPIGOT_DIR:/home/steve/opt/spigot
+      - $SPIGOT_DIR:/opt/spigot
     ports:
       - "25565:25565/tcp"
       - "25565:25565/udp"
     stop_grace_period: "30s"
     tty: true
-    command: bash
+    command: sh
