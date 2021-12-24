@@ -1,20 +1,23 @@
 #!/bin/sh
 set -e
 
+PID=0
 start() {
-    local world_version='0'
-    if [ -e ${OPT_DIR}/version.txt ]; then
-        world_version=$(cat ${OPT_DIR}/version.txt)
-    else
+    if [ ! -e ${OPT_DIR}/version.txt ]; then
         echo ${VERSION} > ${OPT_DIR}/version.txt
         echo "eula=${EULA}" > ${OPT_DIR}/eula.txt
     fi
+    local EXISTING_VERSION=$(cat ${OPT_DIR}/version.txt)
 
     local spigot_args="--nogui"
-    if [ ${VERSION} != ${world_version} ]; then
+    if [ ${VERSION} != ${EXISTING_VERSION} ]; then
         spigot_args="${spigot_args} --forceUpgrade"
     fi
-    screen -ADmS spigot java -Xms2048M -Xmx2048M -jar ${OPT_DIR}/spigot-server.jar ${spigot_args}
+
+    cp ${TMP_DIR}/spigot-server.jar ${OPT_DIR}/spigot-server.jar
+    (screen -DmS spigot java -Xms2048M -Xmx2048M -jar ${OPT_DIR}/spigot-server.jar ${spigot_args}) &
+    sleep 1
+    PID=$(screen -ls | grep spigot | cut -f 1 -d '.' | tr -d '\t')
 }
 
 stop() {
@@ -22,11 +25,9 @@ stop() {
     sleep 10
     screen -S spigot -X stuff "save-all\n"
     screen -S spigot -X stuff "stop\n"
-    exit 0
 }
-trap 'stop' TERM
+trap 'stop' SIGINT SIGTERM
 
 start
 exec "$@"
-
-while sleep 1000; do :; done
+wait $PID

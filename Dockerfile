@@ -42,6 +42,6 @@ USER steve
 WORKDIR ${TMP_DIR}
 RUN curl -o ${TMP_DIR}/BuildTools.jar https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar && \
     java -jar ${TMP_DIR}/BuildTools.jar --rev ${VERSION} && \
-    mv ${TMP_DIR}/spigot-${VERSION}.jar ${OPT_DIR}/spigot-server.jar
+    mv ${TMP_DIR}/spigot-${VERSION}.jar ${TMP_DIR}/spigot-server.jar
 
 WORKDIR ${OPT_DIR}
