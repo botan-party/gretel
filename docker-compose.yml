@@ -1,0 +1,18 @@
+version: '3'
+services:
+  app:
+    build:
+      context: .
+      args:
+        - VERSION=$MINECRAFT_VERSION
+    environment:
+      EULA: $EULA # TRUE or FALSE
+    volumes:
+      - $SPIGOT_DIR:/opt/spigot
+    ports:
+      - "25565:25565/tcp"
+      - "25565:25565/udp"
+      - "25575:25575/udp"
+    stop_grace_period: "30s"
+    tty: true
+    command: sh
