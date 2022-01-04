@@ -15,7 +15,7 @@ start() {
     fi
 
     cp ${TMP_DIR}/spigot-server.jar ${OPT_DIR}/spigot-server.jar
-    (screen -DmS spigot java -Xms2048M -Xmx2048M -jar ${OPT_DIR}/spigot-server.jar ${spigot_args}) &
+    (screen -DmS spigot java -Xms${MIN_MEMORY} -Xmx${MAX_MEMORY} -jar ${OPT_DIR}/spigot-server.jar ${spigot_args}) &
     sleep 1
     PID=$(screen -ls | grep spigot | cut -f 1 -d '.' | tr -d '\t')
 }
