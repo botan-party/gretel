@@ -7,6 +7,8 @@ services:
         - VERSION=$MINECRAFT_VERSION
     environment:
       EULA: $EULA # TRUE or FALSE
+      MAX_MEMORY: $MINECRAFT_MAX_MEMORY
+      MIN_MEMORY: $MINECRAFT_MIN_MEMORY
     volumes:
       - $SPIGOT_DIR:/opt/spigot
     ports:
