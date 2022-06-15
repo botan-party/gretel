@@ -10,12 +10,15 @@ RUN apk update && \
         screen
 
 # version check
+# TODO : Once stable openjdk18 is released, use in 1.19
 RUN if expr ${VERSION} : "^1\.[0-9]|1[0-6]\.[0-9]*$" > /dev/null ; then \
         apk add openjdk8; \
     elif expr ${VERSION} : "^1\.17\.[0-9]*$" > /dev/null ; then \
         apk add openjdk16; \
     elif expr ${VERSION} : "^1\.18\.[0-9]*$" > /dev/null ; then \
         apk add openjdk17; \
+    elif expr ${VERSION} : "^1\.19\.[0-9]*$" > /dev/null ; then \
+            apk add openjdk17; \
     else \
         echo 'Invalid version.' >&2; \
         exit 1; \
