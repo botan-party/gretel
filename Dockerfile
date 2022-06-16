@@ -18,7 +18,7 @@ RUN if echo "${VERSION}" | grep -E '^1\.([0-9]|1[0-6])(\.[0-9]+)?$'; then \
     elif echo "${VERSION}" | grep -E '^1\.18(\.[0-9]+)?$'; then \
         apk add openjdk17; \
     elif echo "${VERSION}" | grep -E '^1\.19(\.[0-9]+)?$'; then \
-            apk add openjdk17; \
+        apk add openjdk17; \
     else \
         echo 'Invalid version.' >&2; \
         exit 1; \
