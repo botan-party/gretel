@@ -11,15 +11,17 @@ RUN apk update && \
 
 # version check
 # TODO : Once stable openjdk18 is released, use in 1.19
-RUN JDK_PACKAGE=$(sed -Ee 's/^1.([0-9]|1[0-6])(.[0-9]+)?$/openjdk8/g' <(echo "${VERSION}")); \
-    JDK_PACKAGE=$(sed -Ee 's/^1.17(.[0-9]+)?$/openjdk16/g' <(echo "${JDK_PACKAGE}")); \
-    JDK_PACKAGE=$(sed -Ee 's/^1.18(.[0-9]+)?$/openjdk17/g' <(echo "${JDK_PACKAGE}")); \
-    JDK_PACKAGE=$(sed -Ee 's/^1.19(.[0-9]+)?$/openjdk17/g' <(echo "${JDK_PACKAGE}")); \
-    if [[ "${JDK_PACKAGE}" == 'openjdk*' ]]; then \
-      apk add "${JDK_PACKAGE}"; \
+RUN if expr ${VERSION} : "^1\.[0-9]|1[0-6]\.[0-9]*$" > /dev/null ; then \
+        apk add openjdk8; \
+    elif expr ${VERSION} : "^1\.17\.[0-9]*$" > /dev/null ; then \
+        apk add openjdk16; \
+    elif expr ${VERSION} : "^1\.18\.[0-9]*$" > /dev/null ; then \
+        apk add openjdk17; \
+    elif expr ${VERSION} : "^1\.19\.[0-9]*$" > /dev/null ; then \
+            apk add openjdk17; \
     else \
-      echo 'Invalid version.' >&2; \
-      exit 1; \
+        echo 'Invalid version.' >&2; \
+        exit 1; \
     fi
 
 COPY ./entrypoint.sh /entrypoint.sh
